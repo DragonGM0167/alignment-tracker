@@ -1,0 +1,28 @@
+{
+  "id": "alignment-tracker",
+  "title": "Alignment Tracking",
+  "description": "Allows the GM to keep track of character actions, and adjust the character's alignment.",
+  "authors": [
+    {
+    "name": "DragonGM"
+    }
+  ],
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },  
+  "scripts": [
+    "scripts/alignment-tracker.js"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "styles": [
+    "styles/alignment-tracker.css"
+  ]
+}
