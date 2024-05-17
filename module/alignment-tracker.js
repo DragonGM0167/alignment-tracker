@@ -9,7 +9,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
             tokens.tools.push({
                 name: "alignment-tracker",
                 title: "Character Alignments",
-                icon: "fas fa-fingerprint",  //fas fa-user-secret
+                icon: "far fa-balance-scale",
                 visible: true,
                 onClick: () => AlignmentUI.activate(),
                 button: true

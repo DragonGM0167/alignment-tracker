@@ -23,11 +23,11 @@ export class AlignmentUI extends FormApplication {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["sheet"],
             height: 350,
-            width: 350,
+            width: 310,
             resizable: false,
             editable: false,
             id: "alignment-tracker",
-            template: `modules/${AlignmentTracker.ID}/templates/${AlignmentTracker.ID}.hbs`,
+            template: `./modules/${AlignmentTracker.ID}/templates/${AlignmentTracker.ID}.hbs`,
             title: "alignment-tracker.title",
             userId: game.userId,
             closeOnSubmit: false,
