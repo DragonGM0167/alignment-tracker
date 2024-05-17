@@ -1,4 +1,8 @@
 {
-    "ALIGNMENT-TRACKER": {
+    "alignment-tracker": {
+        "title": "Character Alignments",
+        "setting-show-badge": "Show badge on control",
+        "setting-individual-adjustment": "Adjust Character Alignment",
+        "setting-individual-adjustment-hint": "Allow to adjust the character's alignment, due to character's actions."
     }
 }
