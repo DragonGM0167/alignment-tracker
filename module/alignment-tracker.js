@@ -1,4 +1,4 @@
-import { AlignmentUI } from "./app/alignment-ui.js";
+import { AlignmentTrackerUI } from "./app/alignment-tracker-ui.js";
 import { AlignmentTrackerUtils } from "./app/alignment-tracker-utils.js";
 
 // Create a badge under the "Token Control" section of the Foundry UI.
@@ -11,7 +11,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
                 title: "Character Alignments",
                 icon: "far fa-balance-scale",
                 visible: true,
-                onClick: () => AlignmentUI.activate(),
+                onClick: () => AlignmentTrackerUI.activate(),
                 button: true
             });
         }
@@ -20,12 +20,19 @@ Hooks.on("getSceneControlButtons", (controls) => {
 
 // To add setting entries in the "Configure Game Settings" dialog
 Hooks.on("init", () => {
-    game.settings.register("alignment-tracker", "show-badge", {
-        name: "alignment-tracker.setting-show-badge",
+    game.settings.register("alignment-tracker", "show-gm-badge", {
+        name: "alignment-tracker.setting-show-gm-badge",
         scope: "world",
         config: true,
         type: Boolean,
         default: true
+    });
+    game.settings.register("alignment-tracker", "show-user-badge", {
+        name: "alignment-tracker.setting-show-user-badge",
+        scope: "world",
+        config: true,
+        type: Boolean,
+        default: false
     });
     game.settings.register("alignment-tracker", "individual-adjustment", {
         name: "alignment-tracker.setting-individual-adjustment",
@@ -50,7 +57,7 @@ export class AlignmentTracker {
     static EVIL = this.MAX_RANGE;
   
     static FLAGS = {
-      ALIGNMENT: 'alignment'
+      ALIGNMENT_TRACKER: 'alignment-tracker'
     }
 
     // Private methods
@@ -70,7 +77,7 @@ export class AlignmentTracker {
                 trackerId: tracker.trackerId,
             }
         }
-        return game.users.get(tracker.userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT, modifiedTracker);
+        return game.users.get(tracker.userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, modifiedTracker);
     }
 
     static #adjustChaotic(tracker, adjustment) {
@@ -108,7 +115,7 @@ export class AlignmentTracker {
         const trackers = {
             [`-=${tracker.actorId}`]: null
         }
-        return game.users.get(tracker.userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT, trackers);
+        return game.users.get(tracker.userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, trackers);
     }
 
     // Public Methods
@@ -127,7 +134,7 @@ export class AlignmentTracker {
 
     // All the alignment trackers for a given user
     static getTrackersForUser(userId) {
-        return game.users.get(userId)?.getFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT);
+        return game.users.get(userId)?.getFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER);
     }
 
     // Get the tracker based off of it's tracker id
@@ -157,7 +164,7 @@ export class AlignmentTracker {
         const alignmentTrackers = {
             [actorId]: newTracker
         }
-        return game.users.get(userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT, alignmentTrackers);
+        return game.users.get(userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, alignmentTrackers);
     }
 
     // -- UPDATE Methods

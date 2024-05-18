@@ -1,13 +1,14 @@
 <form>
-    <div class="align-tracker__tracker-container">
-        <div class="align-tracker__vlabel">Lawful</div>
-        <div class="align-tracker__graph_container">
-            <div class="align-tracker__hlabel">Good</div>
-            <div class="align-tracker__grid">
-                
-            </div>
-            <div class="align-tracker__hlabel">Evil</div>
+    <div class="alignment-tracker__tracker-container">
+        <div class="alignment-tracker__vlabel">Lawful</div>
+        <div class="alignment-tracker__graph_container">
+            <div class="alignment-tracker__goodlabel">Good</div>
+            <!-- Use double braces to get string values, triple braces to send html -->
+            <div class="alignment-tracker__grid">{{{alignment_tracker_cells}}}</div>
+            <div class="alignment-tracker__crosshair_veritcal"></div>
+            <div class="alignment-tracker__crosshair_horizontal"></div>
+            <div class="alignment-tracker__evillabel">Evil</div>
         </div>
-        <div class="flexcol align-tracker__vlabel">Chaotic</div>
+        <div class="alignment-tracker__vlabel">Chaotic</div>
     </div>
 </form>

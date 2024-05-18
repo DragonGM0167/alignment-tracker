@@ -1,11 +1,12 @@
 import { AlignmentTracker } from "../alignment-tracker.js"
+import { AlignmentTrackerUtils } from "./alignment-tracker-utils.js";
 
-export class AlignmentUI extends FormApplication {
+export class AlignmentTrackerUI extends FormApplication {
     static instance = null;
 
     static activate() {
         if (!this.instance) {
-            this.instance = new AlignmentUI();
+            this.instance = new AlignmentTrackerUI();
         }
         if (!this.instance.rendered) {
             this.instance.render(true);
@@ -22,8 +23,8 @@ export class AlignmentUI extends FormApplication {
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["sheet"],
-            height: 350,
-            width: 310,
+            height: 360,
+            width: 325,
             resizable: false,
             editable: false,
             id: "alignment-tracker",
@@ -33,6 +34,13 @@ export class AlignmentUI extends FormApplication {
             closeOnSubmit: false,
             submitOnChange: false
         });
+    }
+
+    // We don't need any data from the options (above) so just call the utility to build out the cell data
+    // that is sent to the handlebars form
+    getData(options) {
+        const alignment_tracker_cells = AlignmentTrackerUtils.buildCells();
+        return { alignment_tracker_cells };
     }
 
 /*
@@ -49,12 +57,6 @@ export class AlignmentUI extends FormApplication {
 
             Tally.addReward(reward);
         }
-    }
-
-    getData(options) {
-        const rewards = Tally.rewards;
-
-        return { rewards };
     }
 
     activateListeners(html) {
