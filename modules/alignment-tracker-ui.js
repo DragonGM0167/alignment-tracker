@@ -23,7 +23,7 @@ export class AlignmentTrackerUI extends FormApplication {
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["sheet"],
-            height: 360,
+            height: 400,
             width: 325,
             resizable: false,
             editable: false,

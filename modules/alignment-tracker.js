@@ -1,11 +1,7 @@
 // The backend class to manipulate and store the individual character alignment values.
 export class AlignmentTracker {
-    static MAX_RANGE = 100;
+    static #MAX_RANGE = 100;
     static ID = 'alignment-tracker';
-    static LAWFUL = 0;
-    static GOOD = 0;
-    static CHAOTIC = this.MAX_RANGE;
-    static EVIL = this.MAX_RANGE;
   
     static FLAGS = {
       ALIGNMENT_TRACKER: 'alignment-tracker'
@@ -14,21 +10,23 @@ export class AlignmentTracker {
     // Private methods
     static #update(tracker, trackerData) {
         if (tracker == null || tracker == undefined ||
-            trackerData.chaosLevel < this.LAWFUL || trackerData.chaosLevel > this.CHAOTIC ||
-            trackerData.evilLevel < this.GOOD || trackerData.evilLevel > this.EVIL) {
+            trackerData.chaosLevel < 0 || trackerData.chaosLevel > this.#MAX_RANGE ||
+            trackerData.evilLevel < 0 || trackerData.evilLevel > this.#MAX_RANGE) {
             return;
         }
+        const updatedTracker = {
+            actorId: tracker.actorId,
+            chaosLevel: trackerData.chaosLevel,
+            evilLevel: trackerData.evilLevel,
+            maxLevel: tracker.maxLevel,
+            userId: tracker.userId,
+            trackerId: tracker.trackerId,
+        };
         const modifiedTracker = {
-            [tracker.actorId]: {
-                actorId: tracker.actorId,
-                chaosLevel: trackerData.chaosLevel,
-                evilLevel: trackerData.evilLevel,
-                maxLevel: tracker.maxLevel,
-                userId: tracker.userId,
-                trackerId: tracker.trackerId,
-            }
+            [tracker.actorId]: updatedTracker
         }
-        return game.users.get(tracker.userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, modifiedTracker);
+        game.users.get(tracker.userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, modifiedTracker);
+        return updatedTracker;
     }
 
     static #adjustChaotic(tracker, adjustment) {
@@ -37,10 +35,10 @@ export class AlignmentTracker {
         }
         const chaosLevel = tracker.chaosLevel + adjustment;
         if (chaosLevel < this.LAWFUL) {
-            return this.#update(tracker, { chaosLevel: this.LAWFUL });
+            return this.#update(tracker, { chaosLevel: 0 });
         }
         if (chaosLevel > this.CHAOTIC) {
-            return this.#update(tracker, { chaosLevel: this.CHAOTIC });
+            return this.#update(tracker, { chaosLevel: this.#MAX_RANGE });
         }
         return this.#update(tracker, { chaosLevel: chaosLevel });
     }
@@ -51,10 +49,10 @@ export class AlignmentTracker {
         }
         const evilLevel = tracker.evilLevel + adjustment;
         if (evilLevel < this.GOOD) {
-            return this.#update(tracker, { evilLevel: this.GOOD });
+            return this.#update(tracker, { evilLevel: 0 });
         }
         if (evilLevel > this.EVIL) {
-            return this.#update(tracker, { evilLevel: this.EVIL });
+            return this.#update(tracker, { evilLevel: this.#MAX_RANGE });
         }
         return this.#update(tracker, { evilLevel: evilLevel });
     }
@@ -66,7 +64,7 @@ export class AlignmentTracker {
         const trackers = {
             [`-=${tracker.actorId}`]: null
         }
-        return game.users.get(tracker.userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, trackers);
+        game.users.get(tracker.userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, trackers);
     }
 
     // Public Methods
@@ -105,13 +103,13 @@ export class AlignmentTracker {
 
     // -- CREATION Methods
     // Create an alignment tracker for a user and actor
-    static async create(userId, actorId) {
+    static create(userId, actorId) {
         // Generate a new alignment tracker for user id
         const newTracker = {
             actorId,
-            chaosLevel: this.MAX_RANGE / 2,
-            evilLevel: this.MAX_RANGE / 2,
-            maxLevel: this.MAX_RANGE,
+            chaosLevel: this.#MAX_RANGE / 2,
+            evilLevel: this.#MAX_RANGE / 2,
+            maxLevel: this.#MAX_RANGE,
             userId,
             trackerId: foundry.utils.randomID(16),
         }
@@ -119,7 +117,8 @@ export class AlignmentTracker {
         const alignmentTrackers = {
             [actorId]: newTracker
         }
-        return game.users.get(userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, alignmentTrackers);
+        game.users.get(userId)?.setFlag(AlignmentTracker.ID, AlignmentTracker.FLAGS.ALIGNMENT_TRACKER, alignmentTrackers);
+        return newTracker;
     }
 
     // -- UPDATE Methods
@@ -149,26 +148,26 @@ export class AlignmentTracker {
 
     // -- DELETE Methods
     static deleteByActorId(actorId) {
-        return this.#delete(this.getByActorId(actorId));
+        this.#delete(this.getByActorId(actorId));
     }
 
     static deleteByTrackerId(trackerId) {
-        return this.#delete(this.getByTrackerId(trackerId));
+        this.#delete(this.getByTrackerId(trackerId));
     }
 
-    static async deleteByUserId(userId) {
+    static deleteAllByUserId(userId) {
         const trackersToBeDeleted = this.getTrackersForUser(userId);
         for (let key in trackersToBeDeleted) {
-            await this.#delete(trackersToBeDeleted[key]);
+            this.#delete(trackersToBeDeleted[key]);
         }
     }
     
     static deleteAll() {
-        const users = AlignmentTrackerUtils.getUsers();
+        const users = game.users._source;
         // Iterate ovar all the users of the game and delete any alignment trackers
         // associated with them.
         for (let index = 0; index < users.length; index++) {
-            this.deleteByUserId(users[index]._id);
+            this.deleteAllByUserId(users[index]._id);
         }
     }
 

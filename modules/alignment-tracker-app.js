@@ -3,7 +3,9 @@ import { AlignmentTrackerUtils } from "./alignment-tracker-utils.js";
 
 // Create a badge under the "Token Control" section of the Foundry UI.
 Hooks.on("getSceneControlButtons", (controls) => {
-    if (game.user.isGM) {
+    const currentUser = game.user;
+    if ((currentUser.isGM && game.settings.get("alignment-tracker", "show-gm-badge")) ||
+        (!currentUser.isGM && game.settings.get("alignment-tracker", "show-user-badge"))) {
         const tokens = controls.find((c) => c.name === "token");
         if (tokens) {
             tokens.tools.push({
