@@ -1,4 +1,4 @@
-import { AlignmentTracker } from "../alignment-tracker.js"
+import { AlignmentTracker } from "./alignment-tracker.js";
 import { AlignmentTrackerUtils } from "./alignment-tracker-utils.js";
 
 export class AlignmentTrackerUI extends FormApplication {
@@ -39,8 +39,8 @@ export class AlignmentTrackerUI extends FormApplication {
     // We don't need any data from the options (above) so just call the utility to build out the cell data
     // that is sent to the handlebars form
     getData(options) {
-        const alignment_tracker_cells = AlignmentTrackerUtils.buildCells();
-        return { alignment_tracker_cells };
+        const alignment_tracker_data = AlignmentTrackerUtils.buildTrackerData();
+        return { alignment_tracker_data };
     }
 
 /*

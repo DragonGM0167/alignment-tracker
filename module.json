@@ -13,7 +13,10 @@
     "verified": "11"
   },  
   "esmodules": [
-    "./module/alignment-tracker.js"
+    "./module/app/alignment-tracker-app.js"
+  ],
+  "scripts": [
+    "./api/alignment-tracker-api.js"
   ],
   "languages": [
     {

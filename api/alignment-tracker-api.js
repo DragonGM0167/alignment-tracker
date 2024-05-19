@@ -1,54 +1,5 @@
-import { AlignmentTrackerUI } from "./app/alignment-tracker-ui.js";
-import { AlignmentTrackerUtils } from "./app/alignment-tracker-utils.js";
-
-// Create a badge under the "Token Control" section of the Foundry UI.
-Hooks.on("getSceneControlButtons", (controls) => {
-    if (game.user.isGM) {
-        const tokens = controls.find((c) => c.name === "token");
-        if (tokens) {
-            tokens.tools.push({
-                name: "alignment-tracker",
-                title: "Character Alignments",
-                icon: "far fa-balance-scale",
-                visible: true,
-                onClick: () => AlignmentTrackerUI.activate(),
-                button: true
-            });
-        }
-    }
-});
-
-// To add setting entries in the "Configure Game Settings" dialog
-Hooks.on("init", () => {
-    game.settings.register("alignment-tracker", "show-gm-badge", {
-        name: "alignment-tracker.setting-show-gm-badge",
-        scope: "world",
-        config: true,
-        type: Boolean,
-        default: true
-    });
-    game.settings.register("alignment-tracker", "show-user-badge", {
-        name: "alignment-tracker.setting-show-user-badge",
-        scope: "world",
-        config: true,
-        type: Boolean,
-        default: false
-    });
-    game.settings.register("alignment-tracker", "individual-adjustment", {
-        name: "alignment-tracker.setting-individual-adjustment",
-        hint: "alignment-tracker.setting-individual-adjustment-hint",
-        scope: "world",
-        config: true,
-        type: Boolean,
-        default: true,
-        onChange: value => {
-            AlignmentTrackerUtils.adjust();
-        }
-    });
-});
-
 // The backend class to manipulate and store the individual character alignment values.
-export class AlignmentTracker {
+class AlignmentTracker {
     static MAX_RANGE = 100;
     static ID = 'alignment-tracker';
     static LAWFUL = 0;
@@ -148,9 +99,13 @@ export class AlignmentTracker {
         }
     }
 
+    static getByActorId(actorId) {
+        return this.getAllTrackers()[actorId];
+    }
+
     // -- CREATION Methods
     // Create an alignment tracker for a user and actor
-    static create(userId, actorId) {
+    static async create(userId, actorId) {
         // Generate a new alignment tracker for user id
         const newTracker = {
             actorId,
@@ -169,7 +124,7 @@ export class AlignmentTracker {
 
     // -- UPDATE Methods
     static updateByActorId(actorId, trackerData) {
-        return this.#update(this.getAllTrackers()[actorId], trackerData);
+        return this.#update(this.getByActorId(actorId), trackerData);
     }
 
     static updateByTrackerId(trackerId, trackerData) {
@@ -177,7 +132,7 @@ export class AlignmentTracker {
     }
 
     static adjustChaoticByActorId(actorId, adjustment) {
-        return this.#adjustChaotic(this.getAllTrackers()[actorId], adjustment);
+        return this.#adjustChaotic(this.getByActorId(actorId), adjustment);
     }
 
     static adjustChaoticByTrackerId(trackerId, adjustment) {
@@ -185,7 +140,7 @@ export class AlignmentTracker {
     }
 
     static adjustEvilByActorId(actorId, adjustment) {
-        return this.#adjustEvil(this.getAllTrackers()[actorId], adjustment);
+        return this.#adjustEvil(this.getByActorId(actorId), adjustment);
     }
 
     static adjustEvilByTrackerId(trackerId, adjustment) {
@@ -194,7 +149,7 @@ export class AlignmentTracker {
 
     // -- DELETE Methods
     static deleteByActorId(actorId) {
-        return this.#delete(this.getAllTrackers()[actorId]);
+        return this.#delete(this.getByActorId(actorId));
     }
 
     static deleteByTrackerId(trackerId) {
@@ -209,9 +164,9 @@ export class AlignmentTracker {
     }
     
     static deleteAll() {
-        // Retrieve the array of available users for the game
-        // Note: this could be used to get actor and player color later.
-        const users = game.users._source;
+        const users = AlignmentTrackerUtils.getUsers();
+        // Iterate ovar all the users of the game and delete any alignment trackers
+        // associated with them.
         for (let index = 0; index < users.length; index++) {
             this.deleteByUserId(users[index]._id);
         }
