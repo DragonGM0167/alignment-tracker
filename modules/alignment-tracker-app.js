@@ -41,10 +41,12 @@ Hooks.on("init", () => {
         hint: "alignment-tracker.setting-individual-adjustment-hint",
         scope: "world",
         config: true,
-        type: Boolean,
-        default: true,
-        onChange: value => {
-            AlignmentTrackerUtils.adjust();
-        }
+        type: Number,
+        default: 5,
+        range: {
+            min: 1,
+            step: 1,
+            max: 10
+          },
     });
 });

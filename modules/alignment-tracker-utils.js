@@ -2,7 +2,7 @@ import { AlignmentTracker } from "./alignment-tracker.js";
 
 export class AlignmentTrackerUtils {
     static buildTrackerData() {
-        const characterDataArray = this.#buildCharacterDataArray();
+        const characterDataArray = this.buildCharacterDataArray();
         return { 
             cells: this.#buildCells(characterDataArray),
             sideButtons: this.#buildSideButtons(characterDataArray)
@@ -13,7 +13,7 @@ export class AlignmentTrackerUtils {
         
     }
 
-    static #buildCharacterDataArray() {
+    static buildCharacterDataArray() {
         const currentUser = game.user;
         const allUsers = game.users._source;
         let characterData = [];
@@ -84,10 +84,11 @@ export class AlignmentTrackerUtils {
             for (let index = 0; index < numberofCharacters; index++) {
                 const playerColor = characterDataArray[index].playerColor;
                 sideButtons += `<button style="background-color: ${playerColor};color: ${this.#contrastColor(playerColor, true)};`
-                sideButtons += ` text-align: center;" value="${characterDataArray[index].actorId}">${characterDataArray[index].actorName}</button>\n`;
+                sideButtons += ` text-align: center;" data-action="${characterDataArray[index].actorId}">${characterDataArray[index].actorName}</button>\n`;
                 sideButtons += "<div></div>";
             }
-            sideButtons += `<button style="text-align: center;">Refresh</button>\n`;
+            // <i class="fa-solid fa-arrow-rotate-right"></i>  -- if we want to have an icon instead?
+            sideButtons += `<button style="text-align: center;" data-action="refresh">Refresh</button>\n`;
             sideButtons += "</div>\n";
         }
         return sideButtons;
