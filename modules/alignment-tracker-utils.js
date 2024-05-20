@@ -74,11 +74,19 @@ export class AlignmentTrackerUtils {
 
     static #buildSideButtons(characterDataArray) {
         let sideButtons = "";
+        if (!game.user.isGM) {
+            sideButtons +=  `<div style="display: grid;grid-template-columns: 130px;grid-template-rows: 2em">\n`;
+            sideButtons += `<div class="alignment-tracker__refresh_button"><button data-action="refresh">`;
+            sideButtons += `<i class="fa-solid fa-arrow-rotate-right"></i><div>Refresh</div></button>\n`;
+            sideButtons += "</div>";
+            return sideButtons;
+        }
         const numberofCharacters = characterDataArray.length;
         let rowPattern = "";
-        for (let index = 0; index <= numberofCharacters; index++) {
+        for (let index = 0; index < numberofCharacters; index++) {
             rowPattern += " 2em 4px";
         }
+        rowPattern += " 2em";
         if (numberofCharacters > 0) {
             sideButtons +=  `<div style="display: grid;grid-template-columns: 130px;grid-template-rows: ${rowPattern};">\n`;
             for (let index = 0; index < numberofCharacters; index++) {
@@ -87,9 +95,9 @@ export class AlignmentTrackerUtils {
                 sideButtons += ` text-align: center;" data-action="${characterDataArray[index].actorId}">${characterDataArray[index].actorName}</button>\n`;
                 sideButtons += "<div></div>";
             }
-            // <i class="fa-solid fa-arrow-rotate-right"></i>  -- if we want to have an icon instead?
-            sideButtons += `<button style="text-align: center;" data-action="refresh">Refresh</button>\n`;
-            sideButtons += "</div>\n";
+            sideButtons += `<div class="alignment-tracker__refresh_button"><button data-action="refresh">`;
+            sideButtons += `<i class="fa-solid fa-arrow-rotate-right"></i><div>Refresh</div></button>\n`;
+            sideButtons += "</div>";
         }
         return sideButtons;
     }

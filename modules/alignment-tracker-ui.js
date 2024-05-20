@@ -44,6 +44,10 @@ export class AlignmentTrackerUI extends FormApplication {
         return { alignment_tracker_data };
     }
 
+    _updateObject(event, formData) {
+        setTimeout(() => this.render(), 0);
+    }
+
     activateListeners(html) {
         super.activateListeners(html);
         
@@ -54,6 +58,4 @@ export class AlignmentTrackerUI extends FormApplication {
             });
         }
     }
-
-    async _updateObject(event, formData) {}
 }

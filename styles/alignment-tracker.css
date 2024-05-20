@@ -99,3 +99,8 @@
     grid-column: 2;
     font-size: x-small;
 }
+
+.alignment-tracker__refresh_button {
+    font-size: x-small;
+    text-align: center;
+}

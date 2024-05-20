@@ -10,9 +10,7 @@ export class AlignmentTrackerAdjustmentUI extends FormApplication {
     }
 
     static activate(characterData) {
-        if (!this.instance) {
-            this.instance = new AlignmentTrackerAdjustmentUI(characterData);
-        }
+        this.instance = new AlignmentTrackerAdjustmentUI(characterData);
         if (!this.instance.rendered) {
             this.instance.render(true);
         }
@@ -53,15 +51,19 @@ export class AlignmentTrackerAdjustmentUI extends FormApplication {
         const actorId = this.characterData.actorId;
         html.find(`button[data-action="adjust-good"]`).click(function(event) {
             AlignmentTracker.adjustEvilByActorId(actorId, -adjustmentValue);
+            ui.notifications.info("Character's alignment shifted towards GOOD.");
         });
         html.find(`button[data-action="adjust-lawful"]`).click(function(event) {
             AlignmentTracker.adjustChaoticByActorId(actorId, -adjustmentValue);
+            ui.notifications.info("Character's alignment shifted towards LAWFUL.");
         });
         html.find(`button[data-action="adjust-chaotic"]`).click(function(event) {
             AlignmentTracker.adjustChaoticByActorId(actorId, adjustmentValue);
+            ui.notifications.info("Character's alignment shifted towards CHAOTIC.");
         });
         html.find(`button[data-action="adjust-evil"]`).click(function(event) {
             AlignmentTracker.adjustEvilByActorId(actorId, adjustmentValue);
+            ui.notifications.info("Character's alignment shifted towards EVIL.");
         });
     }
 
