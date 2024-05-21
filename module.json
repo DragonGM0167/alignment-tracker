@@ -4,7 +4,9 @@
   "description": "Allows the GM to keep track of character actions, and adjust the character's alignment.",
   "authors": [
     {
-      "name": "DragonGM"
+      "name": "DragonGM",
+      "url": "https://github.com/DragonGM0167",
+      "discord": "dragon_gm0167"
     }
   ],
   "version": "1.0.0",
