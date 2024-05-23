@@ -17,10 +17,10 @@ This is all wrapped up in an easy to use UI interface, so the gamemaster is not 
 But this module also has an API exposed for developers that wish to interface with the alignment tracker for their needs.
 ## API Reference
 
-#### Get all the alignment trackers for the game mapped by actorId
+#### Get all the alignment trackers for the game mapped by userId
 
 ```
-  trackers(actorId) = getAllTrackers()
+  trackers(userId) = getAllTrackers()
 ```
 
 #### Get an array of all the alignment trackers for a specific user
