@@ -6,29 +6,31 @@
     {
       "name": "DragonGM",
       "url": "https://github.com/DragonGM0167",
-      "discord": "dragon_gm0167"
+      "discord": "dragon_gm0167",
+      "flags": {}
     }
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": {
-    "minimum": "11",
-    "verified": "11"
-  },  
+    "minimum": "10",
+    "verified": "12"
+  },
   "esmodules": [
-    "./modules/alignment-tracker-app.js"
+    "modules/alignment-tracker-app.js"
   ],
   "scripts": [
-    "./api/alignment-tracker-api.js"
+    "api/alignment-tracker-api.js"
   ],
   "languages": [
     {
       "lang": "en",
       "name": "English",
-      "path": "./lang/en.json"
+      "path": "lang/en.json",
+      "flags": {}
     }
   ],
   "styles": [
-    "./styles/alignment-tracker.css"
+    "styles/alignment-tracker.css"
   ],
   "url": "https://github.com/DragonGM0167/alignment-tracker",
   "bugs": "https://github.com/DragonGM0167/alignment-tracker/issues",
