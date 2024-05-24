@@ -9,6 +9,10 @@ export class AlignmentTracker {
 
     // Private methods
     static #update(tracker, trackerData) {
+        if (!game.user.isGM) {
+            ui.notifications.error("You don't have permission to update unowned trackers.");
+            return;
+        }
         if (tracker == null || tracker == undefined ||
             trackerData.chaosLevel < 0 || trackerData.chaosLevel > this.#MAX_RANGE ||
             trackerData.evilLevel < 0 || trackerData.evilLevel > this.#MAX_RANGE) {
@@ -58,6 +62,10 @@ export class AlignmentTracker {
     }
 
     static #delete(tracker) {
+        if (!game.user.isGM) {
+            ui.notifications.error("You don't have permission to delete trackers.");
+            return;
+        }
         if (tracker == null || tracker == undefined) {
             return;
         }
@@ -104,6 +112,10 @@ export class AlignmentTracker {
     // -- CREATION Methods
     // Create an alignment tracker for a user and actor
     static create(userId, actorId) {
+        if (!game.user.isGM) {
+            ui.notifications.error("You don't have permission to create trackers.");
+            return;
+        }
         // Generate a new alignment tracker for user id
         const newTracker = {
             actorId,
@@ -163,6 +175,10 @@ export class AlignmentTracker {
     }
     
     static deleteAll() {
+        if (!game.user.isGM) {
+            ui.notifications.error("You don't have permission to delete trackers.");
+            return;
+        }
         const users = game.users._source;
         // Iterate ovar all the users of the game and delete any alignment trackers
         // associated with them.

@@ -20,13 +20,13 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Get all the alignment trackers for the game mapped by userId
 
 ```
-  trackers(userId) = getAllTrackers()
+  trackers(userId) = AlignmentTracker.getAllTrackers()
 ```
 
-#### Get an array of all the alignment trackers for a specific user
+#### Get an array (keyed off actorId) of all the alignment trackers for a specific user
 
 ```
-  trackers[] = getTrackersForUser(userId)
+  trackers[] = AlignmentTracker.getTrackersForUser(userId)
 ```
 
 | Parameter | Type     | Description                                    |
@@ -36,7 +36,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Get an alignment tracker for a specific tracker id
 
 ```
-  tracker = getByTrackerId(trackerId)
+  tracker = AlignmentTracker.getByTrackerId(trackerId)
 ```
 
 | Parameter    | Type     | Description                                     |
@@ -46,7 +46,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Get an alignment tracker for a specific actor id
 
 ```
-  tracker = getByActorId(actorId)
+  tracker = AlignmentTracker.getByActorId(actorId)
 ```
 
 | Parameter  | Type     | Description                                   |
@@ -56,7 +56,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Create a new alignment tracker
 
 ```
-  tracker = create(userId, actorId)
+  tracker = AlignmentTracker.create(userId, actorId)
 ```
 
 | Parameter  | Type     | Description                                   |
@@ -67,7 +67,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Update an alignment tracker for a specific tracker id
 
 ```
-  tracker = updateByTrackerId(trackerId, alignmentObject)
+  tracker = AlignmentTracker.updateByTrackerId(trackerId, alignmentObject)
 ```
 
 | Parameter          | Type     | Description                                     |
@@ -88,7 +88,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Update an alignment tracker for a specific actor id
 
 ```
-  tracker = updateByActorId(actorId)
+  tracker = AlignmentTracker.updateByActorId(actorId)
 ```
 
 | Parameter          | Type     | Description                                   |
@@ -109,7 +109,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Adjust the Lawful/Chaotic level of an alignment tracker for a specific tracker id
 
 ```
-  tracker = adjustChaoticByTrackerId(trackerId, adjustment)
+  tracker = AlignmentTracker.adjustChaoticByTrackerId(trackerId, adjustment)
 ```
 
 | Parameter     | Type      | Description                                                                  |
@@ -120,7 +120,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Adjust the Lawful/Chaotic level of an alignment tracker for a specific actor id
 
 ```
-  tracker = adjustChaoticByActorId(actorId, adjustment)
+  tracker = AlignmentTracker.adjustChaoticByActorId(actorId, adjustment)
 ```
 
 | Parameter     | Type      | Description                                                                  |
@@ -131,7 +131,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Adjust the Good/Evil level of an alignment tracker for a specific tracker id
 
 ```
-  tracker = adjustEvilByTrackerId(trackerId, adjustment)
+  tracker = AlignmentTracker.adjustEvilByTrackerId(trackerId, adjustment)
 ```
 
 | Parameter     | Type      | Description                                                             |
@@ -142,7 +142,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Adjust the Good/Evil level of an alignment tracker for a specific actor id
 
 ```
-  tracker = adjustEvilByActorId(actorId, adjustment)
+  tracker = AlignmentTracker.adjustEvilByActorId(actorId, adjustment)
 ```
 
 | Parameter     | Type      | Description                                                             |
@@ -153,7 +153,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Delete alignment tracker for a specific tracker id
 
 ```
-  deleteByTrackerId(trackerId)
+  AlignmentTracker.deleteByTrackerId(trackerId)
 ```
 
 | Parameter     | Type      | Description                                    |
@@ -163,7 +163,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Delete alignment tracker for a specific tracker id
 
 ```
-  deleteByActorId(actorId)
+  AlignmentTracker.deleteByActorId(actorId)
 ```
 
 | Parameter     | Type      | Description                                   |
@@ -173,7 +173,7 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Delete all the alignment trackers for a specific user id
 
 ```
-  deleteAllByUserId(userId)
+  AlignmentTracker.deleteAllByUserId(userId)
 ```
 
 | Parameter     | Type      | Description                                  |
@@ -183,5 +183,5 @@ But this module also has an API exposed for developers that wish to interface wi
 #### Delete all the alignment trackers for all users
 
 ```
-  deleteAll()
+  AlignmentTracker.deleteAll()
 ```
