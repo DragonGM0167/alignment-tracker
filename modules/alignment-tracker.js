@@ -9,8 +9,7 @@ export class AlignmentTracker {
 
     // Private methods
     static #update(tracker, trackerData) {
-        if (!game.user.isGM &&
-            game.user._id != tracker.userId) {
+        if (!game.user.isGM) {
             ui.notifications.error("You don't have permission to update unowned trackers.");
             return;
         }
