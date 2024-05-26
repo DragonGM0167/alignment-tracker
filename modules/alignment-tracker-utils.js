@@ -33,10 +33,14 @@ export class AlignmentTrackerUtils {
                     rowOfAlignment = this.#calculatePosition(tracker.evilLevel);
                     columnOfAlignment = this.#calculatePosition(tracker.chaosLevel);
                 }
+                let name = game.actors.get(actorId)?.name;
+                if (name.indexOf(" ") > 0) {
+                    name = name.substr(0, name.indexOf(" "));
+                }
                 characterData.push(
                     {
                         actorId: allUsers[index].character,
-                        actorName: game.actors.get(actorId)?.name,
+                        actorName: name,
                         userId: allUsers[index]._id,
                         playerColor: allUsers[index].color,
                         alignmentRow: rowOfAlignment,
