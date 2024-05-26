@@ -1,10 +1,19 @@
 .alignment-tracker__tracker_container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 294px 136px;
+    grid-template-rows: auto;
+    position: absolute;
 }
 
 .alignment-tracker__graph_container {
     flex-direction: column;
     flex-grow: 1;
+}
+
+.alignment-tracker__display_container {
+    display: grid;
+    grid-template-columns: 17px 255px 17px;
+    grid-template-rows: 289px;
 }
 
 .alignment-tracker__good_label {
@@ -40,15 +49,17 @@
 
 .alignment-tracker__crosshair_veritcal {
     border-left: 1px solid black;
+    top: 17px;
     height: 254px;
-    left: 155px;
+    left: 144px;
     position: absolute;
     z-index: 1;
 }
 
 .alignment-tracker__crosshair_horizontal {
     border-top: 1px solid black;
-    top: 185px;
+    top: 143px;
+    left: 17px;
     width: 254px;
     position: absolute;
     z-index: 2;
