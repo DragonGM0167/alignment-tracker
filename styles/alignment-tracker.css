@@ -12,7 +12,7 @@
 
 .alignment-tracker__display_container {
     display: grid;
-    grid-template-columns: 17px 255px 17px;
+    grid-template-columns: 1em 255px 1em;
     grid-template-rows: 289px;
 }
 
@@ -49,17 +49,15 @@
 
 .alignment-tracker__crosshair_veritcal {
     border-left: 1px solid black;
-    top: 17px;
     height: 254px;
-    left: 144px;
+    left: 125px;
     position: absolute;
     z-index: 1;
 }
 
 .alignment-tracker__crosshair_horizontal {
     border-top: 1px solid black;
-    top: 143px;
-    left: 17px;
+    top: 125px;
     width: 254px;
     position: absolute;
     z-index: 2;

@@ -187,6 +187,39 @@ class AlignmentTracker {
         }
     }
 
+    static removeOrphans() {
+        if (!game.user.isGM) {
+            ui.notifications.error("You don't have permission to delete trackers.");
+            return;
+        }
+        const allTrackers = this.getAllTrackers();
+        const userIds = [];
+        const actorIds = [];
+        const users = game.users._source;
+        const actors = game.actors._source;
+
+        for (let index = 0; index < users.length; index++) {
+            userIds.push(users[index]._id);
+        }
+        for (let index = 0; index < actors.length; index++) {
+            actorIds.push(actors[index]._id);
+        }
+        for (let key in allTrackers) {
+            const tracker = allTrackers[key];
+            // If the tracker has a orphaned user id, delete all the trackers for the orphaned user id
+            if (!userIds.includes(tracker.userId)) {
+                this.deleteAllByUserId(tracker.userId);
+            }
+        }
+        for (let key in allTrackers) {
+            const tracker = allTrackers[key];
+            // If the tracker has a orphaned actor id, delete the tracker for the orphaned actor id
+            if (!actorIds.includes(tracker.actorId)) {
+                this.deleteByActorId(tracker.actorId);
+            }
+        }
+    }
+
     // -- DEBUGGING Methods
     static log(force, ...args) {  
         const shouldLog = force || game.modules.get('_dev-mode')?.api?.getPackageDebugValue(this.ID);
