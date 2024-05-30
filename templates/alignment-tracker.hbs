@@ -5,7 +5,11 @@
             <div class="alignment-tracker__graph_container">
                 <div class="alignment-tracker__good_label">Good</div>
                 <!-- Use double braces to get string values, triple braces to send html -->
-                <div class="alignment-tracker__alignment_grid">{{{alignment_tracker_data.cells}}}</div>
+                <div class="alignment-tracker__alignment_grid">
+                    {{{alignment_tracker_data.cells}}}
+                    <div class="alignment-tracker__crosshair_veritcal"></div>
+                    <div class="alignment-tracker__crosshair_horizontal"></div>
+                </div>
                 <div class="alignment-tracker__evil_label">Evil</div>
             </div>
             <div class="alignment-tracker__vertical_label">Chaotic</div>
@@ -13,7 +17,5 @@
         <div>
             {{{alignment_tracker_data.sideButtons}}}
         </div>
-        <div class="alignment-tracker__crosshair_veritcal"></div>
-        <div class="alignment-tracker__crosshair_horizontal"></div>
     </div>
 </form>

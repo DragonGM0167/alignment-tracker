@@ -2,6 +2,7 @@ import { AlignmentTracker } from "./alignment-tracker.js";
 
 export class AlignmentTrackerUtils {
     static buildTrackerData() {
+        AlignmentTracker.removeOrphans();
         const characterDataArray = this.buildCharacterDataArray();
         return { 
             cells: this.#buildCells(characterDataArray),
@@ -34,19 +35,21 @@ export class AlignmentTrackerUtils {
                     columnOfAlignment = this.#calculatePosition(tracker.chaosLevel);
                 }
                 let name = game.actors.get(actorId)?.name;
-                if (name.indexOf(" ") > 0) {
-                    name = name.substr(0, name.indexOf(" "));
-                }
-                characterData.push(
-                    {
-                        actorId: allUsers[index].character,
-                        actorName: name,
-                        userId: allUsers[index]._id,
-                        playerColor: allUsers[index].color,
-                        alignmentRow: rowOfAlignment,
-                        alignmentColumn: columnOfAlignment
+                if (name != null && name != undefined) {
+                    if (name.indexOf(" ") > 0) {
+                        name = name.substr(0, name.indexOf(" "));
                     }
-                )
+                    characterData.push(
+                        {
+                            actorId: allUsers[index].character,
+                            actorName: name,
+                            userId: allUsers[index]._id,
+                            playerColor: allUsers[index].color,
+                            alignmentRow: rowOfAlignment,
+                            alignmentColumn: columnOfAlignment
+                        }
+                    )
+                }
             }
         }
         return characterData;
