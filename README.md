@@ -185,3 +185,8 @@ But this module also has an API exposed for developers that wish to interface wi
 ```
   AlignmentTracker.deleteAll()
 ```
+#### Delete all orphaned alignment trackers
+
+```
+  AlignmentTracker.removeOrphans()
+```
