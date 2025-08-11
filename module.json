@@ -10,10 +10,10 @@
       "flags": {}
     }
   ],
-  "version": "1.0.1",
+  "version": "1.0.4",
   "compatibility": {
     "minimum": "10",
-    "verified": "12"
+    "verified": "13"
   },
   "esmodules": [
     "modules/alignment-tracker-app.js"

@@ -6,16 +6,35 @@ Hooks.on("getSceneControlButtons", (controls) => {
     const currentUser = game.user;
     if ((currentUser.isGM && game.settings.get("alignment-tracker", "show-gm-badge")) ||
         (!currentUser.isGM && game.settings.get("alignment-tracker", "show-user-badge"))) {
-        const tokens = controls.find((c) => c.name === "token");
-        if (tokens) {
-            tokens.tools.push({
+        if (parseFloat(game.version) < 13.0) {
+            const tokens = controls.find((c) => c.name === "token");
+            if (tokens) {
+                tokens.tools.push({
+                    name: "alignment-tracker",
+                    title: "Character Alignments",
+                    icon: "far fa-balance-scale",
+                    visible: true,
+                    onClick: () => AlignmentTrackerUI.activate(),
+                    button: true
+                });
+            }
+        }
+        else {
+            const tokenControls = controls["tokens"];
+            if (!tokenControls) {
+                return;
+            }
+            if (tokenControls.tools["alignment-tracker"]) {
+                return;
+            }
+            tokenControls.tools["alignment-tracker"] = {
                 name: "alignment-tracker",
                 title: "Character Alignments",
                 icon: "far fa-balance-scale",
                 visible: true,
                 onClick: () => AlignmentTrackerUI.activate(),
                 button: true
-            });
+            };
         }
     }
 });
